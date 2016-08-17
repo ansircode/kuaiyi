@@ -10,7 +10,7 @@
 
 @interface XJWeatherView : UIView
 
-@property (nonatomic, strong) UIImage *img;
+@property (nonatomic, strong) UIImageView *weatherImageV;
 
 @property (nonatomic, strong) UILabel *weatherType;
 
