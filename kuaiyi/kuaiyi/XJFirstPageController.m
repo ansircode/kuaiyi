@@ -7,12 +7,10 @@
 //
 
 #import "XJFirstPageController.h"
-#import "XJWeatherView.h"
 #define NAV_HIGH 64
 
-@interface XJFirstPageController ()
+@interface XJFirstPageController ()<XJWeatherViewDelegate>
 
-@property (nonatomic, strong) XJWeatherView *weatherView;
 
 @end
 
@@ -21,8 +19,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //隐藏navigation返回按钮
+    self.navigationItem.hidesBackButton = YES;
+    
     //设置UI
     [self prepareUI];
+    
+    //指定代理
+    self.weatherView.delegate = self;
 }
 
 - (void)prepareUI {
@@ -33,6 +37,13 @@
         make.top.equalTo(self.view.mas_top).with.offset(NAV_HIGH);
         make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, WEATHER_High));
     }];
+}
+
+#pragma mark XJWeatherViewDelegate
+-(void)weatherViewActionAddress {
+    //跳转界面
+    XJChooseAddressController *chooseAddressC = [[XJChooseAddressController alloc] init];
+    [self.navigationController pushViewController:chooseAddressC animated:YES];
 }
 
 #pragma mark 懒加载

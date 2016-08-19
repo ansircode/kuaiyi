@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol XJWeatherViewDelegate <NSObject>
+
+- (void)weatherViewActionAddress;
+
+@end
+
 @interface XJWeatherView : UIView
 
 @property (nonatomic, strong) UIImageView *weatherImageV;
@@ -19,5 +25,8 @@
 @property (nonatomic, strong) UILabel *temperature;
 
 @property (nonatomic, strong) UILabel *date;
+
+//代理协议
+@property (nonatomic, weak) id<XJWeatherViewDelegate> delegate;
 
 @end

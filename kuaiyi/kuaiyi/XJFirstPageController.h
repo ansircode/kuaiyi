@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XJWeatherView.h"
 
 @interface XJFirstPageController : UIViewController
+
+
+@property (nonatomic, strong) XJWeatherView *weatherView;
 
 @end

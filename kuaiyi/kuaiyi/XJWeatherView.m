@@ -22,6 +22,7 @@
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         [self prepareUI];
+        
     }
     return self;
 }
@@ -65,6 +66,12 @@
     }];
 }
 
+//监听地址按钮的点击
+- (void)activeAddress {
+    //跳转界面
+    [self.delegate weatherViewActionAddress];
+}
+
 #pragma mark 懒加载
 -(UIImageView *)weatherImageV {
     if (_weatherImageV == nil) {
@@ -86,9 +93,20 @@
     if (_address == nil) {
         _address = [[UIButton alloc] init];
         [_address setTitle:@"广州" forState:UIControlStateNormal];
+        //解档
+        NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"user.plist"];
+        XJUser *user = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
+        if (user) {
+            if (user.city_address) {
+                [self.address setTitle:user.city_address forState:UIControlStateNormal];
+            }
+        }
         [_address setTitleColor];
         [_address sizeToFit];
+        //监听按钮的点击
+        [_address addTarget:self action:@selector(activeAddress) forControlEvents:UIControlEventTouchUpInside];
     }
+    
     return _address;
 }
 -(UILabel *)temperature {
