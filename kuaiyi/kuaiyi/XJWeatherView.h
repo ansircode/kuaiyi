@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XJWeather.h"
 
 @protocol XJWeatherViewDelegate <NSObject>
 
@@ -25,6 +26,9 @@
 @property (nonatomic, strong) UILabel *temperature;
 
 @property (nonatomic, strong) UILabel *date;
+
+//天气model
+@property (nonatomic, strong) XJWeather *weather;
 
 //代理协议
 @property (nonatomic, weak) id<XJWeatherViewDelegate> delegate;

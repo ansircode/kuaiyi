@@ -22,6 +22,8 @@
 -(instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         [self prepareUI];
+        [self prepareData];
+        
         
     }
     return self;
@@ -30,6 +32,9 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self prepareUI];
+        
+        [self prepareData];
+        
     }
     return self;
 }
@@ -66,6 +71,38 @@
     }];
 }
 
+#pragma mark 准备数据
+- (void)prepareData {
+    [XJWeather loadWeatherModelWithCityName:self.weather.currentCity CompletionHandler:^(XJWeather *XJWeather, NSError *error) {
+        self.weather = XJWeather;
+        //设置地址
+        [self.address setTitle:self.weather.currentCity forState:UIControlStateNormal];
+        //设置日期
+        self.date.text = self.weather.date;
+        //设置温度
+        NSString *temparetureN = self.weather.temperature;
+        self.temperature.text = [NSString stringWithFormat:@"温度: %@",temparetureN];
+        //设置天气类型
+        self.weatherType.text = self.weather.weather;
+        //设置天气图片
+        if ([self.weatherType.text isEqualToString:@"晴"]) {
+            [self.weatherImageV setImage:[UIImage imageNamed:@"icon_weather_qing"]];
+        }else if ([self.weatherType.text isEqualToString:@"阴"]) {
+            [self.weatherImageV setImage:[UIImage imageNamed:@"icon_weather_yintian"]];
+        }else if ([self.weatherType.text isEqualToString:@"多云"]) {
+            [self.weatherImageV setImage:[UIImage imageNamed:@"icon_weather_duoyun"]];
+        }else if ([self.weatherType.text isEqualToString:@"雨"]) {
+            [self.weatherImageV setImage:[UIImage imageNamed:@"icon_weather_rain"]];
+        }else {
+            [self.weatherImageV sd_setImageWithURL:self.weather.dayPictureUrl];
+        }
+    }];
+    
+    
+}
+
+
+
 //监听地址按钮的点击
 - (void)activeAddress {
     //跳转界面
@@ -83,7 +120,6 @@
 -(UILabel *)weatherType {
     if (_weatherType == nil) {
         _weatherType = [[UILabel alloc] init];
-        [_weatherType setText:@"小雨"];
         [_weatherType setTitleColor];
         [_weatherType sizeToFit];
     }
@@ -92,15 +128,6 @@
 -(UIButton *)address {
     if (_address == nil) {
         _address = [[UIButton alloc] init];
-        [_address setTitle:@"广州" forState:UIControlStateNormal];
-        //解档
-        NSString *file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"user.plist"];
-        XJUser *user = [NSKeyedUnarchiver unarchiveObjectWithFile:file];
-        if (user) {
-            if (user.city_address) {
-                [self.address setTitle:user.city_address forState:UIControlStateNormal];
-            }
-        }
         [_address setTitleColor];
         [_address sizeToFit];
         //监听按钮的点击
@@ -112,7 +139,6 @@
 -(UILabel *)temperature {
     if (_temperature == nil) {
         _temperature = [[UILabel alloc] init];
-        _temperature.text = @"温度：11 ~ 16 C";
         [_temperature setTitleColor];
         [_temperature sizeToFit];
     }
@@ -121,11 +147,17 @@
 -(UILabel *)date {
     if (_date == nil) {
         _date = [[UILabel alloc] init];
-        _date.text = @"2016-08-17";
         [_date setTitleColor];
         [_date sizeToFit];
     }
     return _date;
+}
+
+-(XJWeather *)weather {
+    if (_weather == nil) {
+        _weather = [[XJWeather alloc] init];
+    }
+    return _weather;
 }
 
 @end

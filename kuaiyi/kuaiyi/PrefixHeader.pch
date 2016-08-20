@@ -15,6 +15,11 @@
 #import "UIButton+Color.h"
 #import "XJChooseAddressController.h"
 #import "XJUser.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
+#import "SVProgressHUD.h"
+#import "XJNetWorkTool.h"
+#import "UIImageView+WebCache.h"
 
 
 #pragma mark 宏定义
@@ -26,6 +31,7 @@
 //MARK: 百度天气
 #define BDWeather_KEY @"17IvzuqmKrK1cGwNL6VQebF9"
 #define BDWeather_URLString @"http://api.map.baidu.com/telematics/v3/weather"
+#define kGetWeather_URL(city) ([NSString stringWithFormat: @"http://api.map.baidu.com/telematics/v3/weather?location=%@&output=json&ak=%@", city, kBDWeather_KEY])
 
 
 // Include any system framework and library headers here that should be included in all compilation units.
