@@ -7,7 +7,7 @@
 //
 
 #import "XJFirstPageController.h"
-#define NAV_HIGH 64
+#define NAV_HIGH 0
 
 @interface XJFirstPageController ()<XJWeatherViewDelegate>
 
@@ -27,6 +27,10 @@
     
     //指定代理
     self.weatherView.delegate = self;
+    
+    self.navigationItem.title = @"快医";
+    
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)prepareUI {

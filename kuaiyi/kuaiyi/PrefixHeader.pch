@@ -20,7 +20,8 @@
 #import "SVProgressHUD.h"
 #import "XJNetWorkTool.h"
 #import "UIImageView+WebCache.h"
-
+#import "MMDrawerController.h"
+#import "XJOtherFunctionController.h"
 
 #pragma mark 宏定义
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)

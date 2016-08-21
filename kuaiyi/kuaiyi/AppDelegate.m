@@ -9,7 +9,10 @@
 #import "AppDelegate.h"
 
 
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong) MMDrawerController *drawerC;
 
 @end
 
@@ -20,8 +23,32 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[XJFirstPageController alloc] init]];
-    self.window.rootViewController = nav;
+    //全局导航栏的背景图片
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav"] forBarMetrics:UIBarMetricsDefault];
+    //全局导航栏字体颜色
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    //全局导航栏渲染颜色
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    //首页
+    UINavigationController *centerNav = [[UINavigationController alloc] initWithRootViewController:[[XJFirstPageController alloc] init]];
+    [centerNav setRestorationIdentifier:@"centerNav"];
+    
+    //左侧滑
+    UINavigationController *leftNav = [[UINavigationController alloc] initWithRootViewController:[[XJOtherFunctionController alloc] init]];
+    [leftNav setRestorationIdentifier:@"leftNav"];
+    
+    self.drawerC = [[MMDrawerController alloc] initWithCenterViewController:centerNav leftDrawerViewController:leftNav];
+    [self.drawerC setShowsShadow:NO];
+    [self.drawerC setRestorationIdentifier:@"MMDrawer"];
+    //设置左页面宽度
+    [self.drawerC setMaximumLeftDrawerWidth:200.0];
+    //左右滑动
+    [self.drawerC setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.drawerC setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+    
+    self.window.rootViewController = self.drawerC;
     [self.window makeKeyAndVisible];
     
     

@@ -23,7 +23,13 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
    
+    //更改返回按钮
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"jiantou"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     
+}
+
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
